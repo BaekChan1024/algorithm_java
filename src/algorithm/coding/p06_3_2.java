@@ -1,7 +1,5 @@
 package algorithm.coding;
 
-import java.util.Stack;
-
 public class p06_3_2 {
 
     public static String solution(int num) {
