@@ -5,21 +5,20 @@ import java.util.Stack;
 public class p12909 {
 
     public static boolean solution(String s) {
-        Stack<Character> stk = new Stack<>();
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
 
-        for (char s1 : s.toCharArray()) {
-
-            if (s1 == '(') {
-                stk.push(s1);
-            } else {
-                if (stk.isEmpty()) {
-                    return false;
-                }
-                stk.pop();
+            if (c == '(') {
+                stack.push(c);
+                continue;
             }
-
+            if (stack.isEmpty()) {
+                return false;
+            }
+            if (!stack.isEmpty()) {
+                stack.pop();
+            }
         }
-
-        return stk.isEmpty();
+        return stack.isEmpty();
     }
 }
