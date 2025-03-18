@@ -1,4 +1,4 @@
-package algorithm.array.programmers;
+package algorithm.array.programmers.교점에_별_만들기;
 
 public class p87377 {
 
