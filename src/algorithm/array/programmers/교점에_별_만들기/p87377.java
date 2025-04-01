@@ -102,6 +102,8 @@ class Solution {
         int height = max.getY() - min.getY() + 1;
 
         char[][] result = new char[height][width];
+        System.out.println(width);
+        System.out.println(height);
         for (char[] arr : result) {
             Arrays.fill(arr, '.');
         }
@@ -124,21 +126,20 @@ class Solution {
     }
 
     private Point interaction(int A, int B, int E, int C, int D, int F) {
-        int denominator = A * D - B * C;
-
+        long denominator = (long) A * D - (long) B * C;
         if (denominator == 0) {
             return null;
         }
 
-        int moleculeX = B * F - E * D;
-        int moleculeY = E * C - A * F;
+        long moleculeX = (long) B * F - (long) E * D;
+        long moleculeY = (long) E * C - (long) A * F;
 
-        double x = (double) moleculeX / denominator;
-        double y = (double) moleculeY / denominator;
-
-        if (x % 1 != 0 || y % 1 != 0) {
+        if (moleculeX % denominator != 0 || moleculeY % denominator != 0) {
             return null;
         }
+
+        long x = moleculeX / denominator;
+        long y = moleculeY / denominator;
 
         return new Point( (int) x, (int) y);
     }
