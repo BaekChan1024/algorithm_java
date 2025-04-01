@@ -19,6 +19,8 @@
 - 1st
   - x, y 좌표의 최대값을 구할 때, 음수인 경우도 고려하여 구하였는데 char[][] 배열에서 y축은 값이 클수록 아래로 내려가는 부분을 헷갈림
   - hint 훔쳐봄
+- 2nd
+  - x축과 y축 좌표를 구할때 아직도 헷갈림.... 다시 공부해야지
 
 ## 출처
 https://school.programmers.co.kr/learn/courses/30/lessons/87377
@@ -26,6 +28,7 @@ https://school.programmers.co.kr/learn/courses/30/lessons/87377
 
 ## 소요시간
 1st 1시간 40분
+2nd 40분
 
 ## 복잡도
 - 시간 복잡도: O(N^2)

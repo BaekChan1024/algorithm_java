@@ -21,51 +21,59 @@ public class p87377 {
 }
 
 class Point {
-    private long x;
-    private long y;
+    private int x;
+    private int y;
 
-    public Point(long x, long y) {
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public long getX() {
+    public int getX() {
         return this.x;
     }
 
-    public long getY() {
+    public int getY() {
         return this.y;
     }
-
 }
 
 class PointService {
-    public static Point getMax(List<Point> list) {
-        long x = Long.MIN_VALUE;
-        long y = Long.MIN_VALUE;
+
+    public static Point calculateMax(List<Point> list) {
+        int maxX = Integer.MIN_VALUE;
+        int maxY = Integer.MIN_VALUE;
+
         for (Point point : list) {
-            if (x < point.getX()) {
-                x = point.getX();
+            int x = point.getX();
+            int y = point.getY();
+
+            if (x > maxX) {
+                maxX = x;
             }
-            if (y < point.getY()) {
-                y = point.getY();
+            if (y > maxY) {
+                maxY = y;
             }
         }
-        return new Point(x, y);
+        return new Point(maxX, maxY);
     }
 
-    public static Point getMin(List<Point> list) {
-        long x = Long.MAX_VALUE;
-        long y = Long.MAX_VALUE;
+    public static Point calculateMin(List<Point> list) {
+        int minX = Integer.MAX_VALUE;
+        int minY = Integer.MAX_VALUE;
+
         for (Point point : list) {
-            if (x > point.getX()) {
-                x = point.getX();
+            int x = point.getX();
+            int y = point.getY();
+
+            if (x < minX) {
+                minX = x;
             }
-            if (y > point.getY()) {
-                y = point.getY();
+            if (y < minY) {
+                minY = y;
             }
         }
-        return new Point(x, y);
+        return new Point(minX, minY);
     }
 }
 
@@ -80,53 +88,58 @@ class Solution {
                 int C = line[j][0];
                 int D = line[j][1];
                 int F = line[j][2];
-                Point point = calculate(A, B, E, C, D, F);
-                if (point != null) {
-                    list.add(point);
+                Point p = interaction(A, B, E, C, D, F);
+                if (p != null) {
+                    list.add(p);
                 }
             }
         }
 
-        Point maxPoint = PointService.getMax(list);
-        Point minPoint = PointService.getMin(list);
+        Point max = PointService.calculateMax(list);
+        Point min = PointService.calculateMin(list);
 
-        int width = (int) (maxPoint.getX() - minPoint.getX() + 1);
-        int height = (int) (maxPoint.getY() - minPoint.getY() + 1);
+        int width = max.getX() - min.getX() + 1;
+        int height = max.getY() - min.getY() + 1;
 
-        char[][] arr = new char[height][width];
-        for (char[] row : arr) {
-            Arrays.fill(row, '.');
+        char[][] result = new char[height][width];
+        for (char[] arr : result) {
+            Arrays.fill(arr, '.');
         }
 
         for (Point point : list) {
-            int x = (int) (point.getX() - minPoint.getX());
-            int y = (int) (maxPoint.getY() - point.getY());
-            arr[y][x] = '*';
+            int x = point.getX() - min.getX();
+            int y = max.getY() - point.getY();
+
+            result[y][x] = '*';
         }
 
-        String[] result = new String[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            result[i] = new String(arr[i]);
+        String[] answer = new String[result.length];
+
+        for (int i = 0; i < answer.length; i++) {
+            String s = new String(result[i]);
+            answer[i] = s;
         }
-        return result;
+
+        return answer;
     }
 
-    public Point calculate(int A, int B, int E, int C, int D, int F) {
-        long denominator = (long) A * D - (long) B * C;
+    private Point interaction(int A, int B, int E, int C, int D, int F) {
+        int denominator = A * D - B * C;
+
         if (denominator == 0) {
             return null;
         }
 
-        long xNumerator = (long) B * F - (long) E * D;
-        long yNumerator = (long) E * C - (long) A * F;
+        int moleculeX = B * F - E * D;
+        int moleculeY = E * C - A * F;
 
-        double x = (double) xNumerator / denominator;
-        double y = (double) yNumerator / denominator;
+        double x = (double) moleculeX / denominator;
+        double y = (double) moleculeY / denominator;
 
         if (x % 1 != 0 || y % 1 != 0) {
             return null;
         }
 
-        return new Point((long) x, (long) y);
+        return new Point( (int) x, (int) y);
     }
 }
