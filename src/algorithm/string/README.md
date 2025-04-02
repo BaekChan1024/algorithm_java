@@ -7,7 +7,7 @@
 [이상한 문자열 만들기](programmers/이상한_문자열_만들기) <br/>
 
 ## Level 2 (Silver)
-
+[문자열 압축](programmers/문자열_압축) <br/>
 
 ## Level 3 (Gold)
 
