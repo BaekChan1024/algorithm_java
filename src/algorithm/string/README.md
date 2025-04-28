@@ -8,6 +8,7 @@
 
 ## Level 2 (Silver)
 [문자열 압축](programmers/문자열_압축) <br/>
+[이진 변환 반복하기](programmers/이진_변환_반복하기) <br/>
 
 ## Level 3 (Gold)
 
