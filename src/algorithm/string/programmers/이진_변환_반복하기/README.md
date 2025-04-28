@@ -29,5 +29,5 @@ https://school.programmers.co.kr/learn/courses/30/lessons/70129?language=java
 ## 소요시간
 - 1st 8분
 ## 복잡도
-- 시간 복잡도 : O(N^2)
+- 시간 복잡도 : O(N)
 - 공간 복잡도 : O(N)
