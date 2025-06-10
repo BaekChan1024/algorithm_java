@@ -20,127 +20,115 @@ public class p87377 {
     }
 }
 
-class Point {
-    private int x;
-    private int y;
-
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public int getX() {
-        return this.x;
-    }
-
-    public int getY() {
-        return this.y;
-    }
-}
-
-class PointService {
-
-    public static Point calculateMax(List<Point> list) {
-        int maxX = Integer.MIN_VALUE;
-        int maxY = Integer.MIN_VALUE;
-
-        for (Point point : list) {
-            int x = point.getX();
-            int y = point.getY();
-
-            if (x > maxX) {
-                maxX = x;
-            }
-            if (y > maxY) {
-                maxY = y;
-            }
-        }
-        return new Point(maxX, maxY);
-    }
-
-    public static Point calculateMin(List<Point> list) {
-        int minX = Integer.MAX_VALUE;
-        int minY = Integer.MAX_VALUE;
-
-        for (Point point : list) {
-            int x = point.getX();
-            int y = point.getY();
-
-            if (x < minX) {
-                minX = x;
-            }
-            if (y < minY) {
-                minY = y;
-            }
-        }
-        return new Point(minX, minY);
-    }
-}
-
 class Solution {
     public String[] solution(int[][] line) {
         List<Point> list = new ArrayList<>();
         for (int i = 0; i < line.length; i++) {
+            int[] row1 = line[i];
+            int x1 = row1[0];
+            int y1 = row1[1];
+            int z1 = row1[2];
             for (int j = i + 1; j < line.length; j++) {
-                int A = line[i][0];
-                int B = line[i][1];
-                int E = line[i][2];
-                int C = line[j][0];
-                int D = line[j][1];
-                int F = line[j][2];
-                Point p = interaction(A, B, E, C, D, F);
-                if (p != null) {
-                    list.add(p);
+                int[] row2 = line[j];
+                int x2 = row2[0];
+                int y2 = row2[1];
+                int z2 = row2[2];
+
+                Point point = calculate(x1, y1, z1, x2, y2, z2);
+
+                if (point != null) {
+                    list.add(point);
                 }
             }
         }
 
-        Point max = PointService.calculateMax(list);
-        Point min = PointService.calculateMin(list);
+        Point maxPoint = maxPoint(list);
+        Point minPoint = minPoint(list);
 
-        int width = max.getX() - min.getX() + 1;
-        int height = max.getY() - min.getY() + 1;
+        int width = (int) (maxPoint.x - minPoint.x  + 1);
+        int height = (int) (maxPoint.y - minPoint.y + 1);
 
-        char[][] result = new char[height][width];
-        System.out.println(width);
-        System.out.println(height);
-        for (char[] arr : result) {
-            Arrays.fill(arr, '.');
+        char[][] arr = new char[height][width];
+        for (char[] row : arr) {
+            Arrays.fill(row, '.');
         }
 
-        for (Point point : list) {
-            int x = point.getX() - min.getX();
-            int y = max.getY() - point.getY();
-
-            result[y][x] = '*';
+        for (Point p : list) {
+            int x = (int) (p.x - minPoint.x);
+            int y = (int) (maxPoint.y - p.y);
+            arr[y][x] = '*';
         }
 
-        String[] answer = new String[result.length];
-
-        for (int i = 0; i < answer.length; i++) {
-            String s = new String(result[i]);
-            answer[i] = s;
+        String[] result = new String[arr.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = new String(arr[i]);
         }
-
-        return answer;
+        return result;
     }
 
-    private Point interaction(int A, int B, int E, int C, int D, int F) {
-        long denominator = (long) A * D - (long) B * C;
-        if (denominator == 0) {
-            return null;
+    class Point {
+        long x;
+        long y;
+
+        public Point(long x, long y) {
+            this.x = x;
+            this.y = y;
         }
 
-        long moleculeX = (long) B * F - (long) E * D;
-        long moleculeY = (long) E * C - (long) A * F;
+        @Override
+        public String toString() {
+            return x + " " + y;
+        }
+    }
 
-        if (moleculeX % denominator != 0 || moleculeY % denominator != 0) {
-            return null;
+    public Point maxPoint(List<Point> list) {
+        long maxX = Long.MIN_VALUE;
+        long maxY = Long.MIN_VALUE;
+
+        for (Point point : list) {
+            long x0 = point.x;
+            long y0 = point.y;
+            if (maxX < x0) {
+                maxX = x0;
+            }
+            if (maxY < y0) {
+                maxY = y0;
+            }
         }
 
-        long x = moleculeX / denominator;
-        long y = moleculeY / denominator;
+        return new Point(maxX, maxY);
+    }
 
-        return new Point( (int) x, (int) y);
+    public Point minPoint(List<Point> list) {
+        long minX = Long.MAX_VALUE;
+        long minY = Long.MAX_VALUE;
+
+        for (Point point : list) {
+            long x0 = point.x;
+            long y0 = point.y;
+            if (minX > x0) {
+                minX = x0;
+            }
+            if (minY > y0) {
+                minY = y0;
+            }
+        }
+
+        return new Point(minX, minY);
+    }
+
+    public Point calculate(int a1, int b1, int c1, int a2, int b2, int c2) {
+        long denominator = (long) a1 * b2 - (long) a2 * b1;
+        if (denominator == 0) return null;
+
+        long xNumerator = (long) b1 * c2 - (long) b2 * c1;
+        long yNumerator = (long) c1 * a2 - (long) c2 * a1;
+
+        if (xNumerator % denominator != 0 || yNumerator % denominator != 0) return null;
+
+        long x = xNumerator / denominator;
+        long y = yNumerator / denominator;
+
+        return new Point(x, y);
     }
 }

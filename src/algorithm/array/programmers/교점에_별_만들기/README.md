@@ -21,6 +21,8 @@
   - hint 훔쳐봄
 - 2nd
   - x축과 y축 좌표를 구할때 아직도 헷갈림.... 다시 공부해야지
+- 3rd
+  - 마지막 테스트 케이스에서 부동소수점 에러 발생하여 calculate 함수 다시 구현하였음
 
 ## 출처
 https://school.programmers.co.kr/learn/courses/30/lessons/87377
@@ -29,6 +31,7 @@ https://school.programmers.co.kr/learn/courses/30/lessons/87377
 ## 소요시간
 1st 1시간 40분
 2nd 40분
+3rd 1시간
 
 ## 복잡도
 - 시간 복잡도: O(N^2)
